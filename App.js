@@ -1,20 +1,15 @@
-import { StatusBar } from 'expo-status-bar';
-import { StyleSheet, Text, View } from 'react-native';
+import React from 'react';
+import {Provider as PaperProvider} from "react-native-paper";
+import MainStackNavigator from "./src/navigation/MainStackNavigator";
+import {Provider as ReduxProvider} from "react-redux";
+import store from "./src/redux/store";
 
-export default function App() {
-  return (
-    <View style={styles.container}>
-      <Text>Open up App.js to start working on your app!</Text>
-      <StatusBar style="auto" />
-    </View>
-  );
-}
+const App = () => {
+    return (<PaperProvider>
+        <ReduxProvider store={store}>
+            <MainStackNavigator/>
+        </ReduxProvider>
+    </PaperProvider>);
+};
 
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: '#fff',
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-});
+export default App;
