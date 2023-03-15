@@ -14,7 +14,7 @@ const Login = (props) => {
   const dispatch = useDispatch();
   const auth = useSelector((state) => state.auth);
   const loginHandler = () => {
-    dispatch(login({ username, password }));
+    dispatch(login({ username: username, password: password }));
   };
 
   useEffect(() => {

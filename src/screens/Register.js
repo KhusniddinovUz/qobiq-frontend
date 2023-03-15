@@ -37,7 +37,19 @@ const Register = (props) => {
     { label: "Mentor", value: "mentor" },
   ];
   const registerHandler = () => {
-    dispatch(register({}));
+    dispatch(
+      register({
+        user_type: type,
+        username: email,
+        fullname: name,
+        email: email,
+        age: age,
+        gender: gender,
+        phone_number: phoneNumber,
+        bio: bio,
+        password: password,
+      })
+    );
   };
 
   return (
@@ -85,6 +97,7 @@ const Register = (props) => {
                 ]}
               >
                 <Picker
+                  dropdownIconColor={"#00CDBD"}
                   selectedValue={gender}
                   onValueChange={(itemValue, itemIndex) => setGender(itemValue)}
                 >
@@ -158,6 +171,7 @@ const Register = (props) => {
             <Pressable style={styles.authButton} onPress={registerHandler}>
               <Text
                 onPress={() => {
+                  registerHandler();
                   console.log(
                     type,
                     name,

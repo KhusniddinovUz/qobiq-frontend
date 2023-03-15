@@ -122,8 +122,18 @@ const styles = StyleSheet.create({
     // right: 0,
   },
   authLine: {
+    marginTop: 30,
     justifyContent: "center",
     alignItems: "center",
+  },
+  chatsList: {
+    width: "80%",
+    padding: 20,
+    marginTop: 40,
+    marginLeft: "auto",
+    marginRight: "auto",
+    borderRadius: 16,
+    textAlign: "center",
   },
 });
 
