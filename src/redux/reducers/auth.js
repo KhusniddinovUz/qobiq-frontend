@@ -8,10 +8,14 @@ import {
 const initialState = {
   isAuthenticated: false,
   token: null,
-  username: null,
+  userType: null,
+  name: null,
+  gender: null,
+  age: null,
   email: null,
   id: null,
-  group_number: null,
+  phoneNumber: null,
+  bio: null,
 };
 
 const auth = (state = initialState, action) => {
@@ -21,10 +25,14 @@ const auth = (state = initialState, action) => {
       return {
         isAuthenticated: true,
         token: action.payload.token,
-        username: action.payload.user.username,
+        userType: action.payload.user.user_type,
+        name: action.payload.user.fullname,
+        gender: action.payload.user.gender,
+        age: action.payload.user.age,
         email: action.payload.user.email,
         id: action.payload.user.id,
-        group_number: action.payload.user.group_number,
+        phoneNumber: action.payload.user.phone_number,
+        bio: action.payload.user.bio,
       };
     default:
       return state;

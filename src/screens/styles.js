@@ -3,6 +3,9 @@ import { StyleSheet } from "react-native";
 const mainColor = "#00CDBD";
 
 const styles = StyleSheet.create({
+  container: {
+    marginTop: 70,
+  },
   authContainer: {
     backgroundColor: mainColor,
     flex: 1,
@@ -56,19 +59,22 @@ const styles = StyleSheet.create({
     justifyContent: "center",
   },
   authHeaderBox: {
-    height: 200,
+    marginTop: 50,
+    marginBottom: 20,
     width: "100%",
     display: "flex",
     alignItems: "center",
     justifyContent: "center",
   },
   authHeader: {
+    // fontFamily: "Verdana",
     textAlign: "left",
-    fontSize: 50,
+    fontSize: 45,
     color: "#fff",
     margin: "auto",
   },
   input: {
+    // fontFamily: "Verdana",
     width: "100%",
     marginRight: "auto",
     marginLeft: "auto",
@@ -80,6 +86,7 @@ const styles = StyleSheet.create({
     borderRadius: 20,
   },
   authButton: {
+    // fontFamily: "Verdana",
     width: "80%",
     marginTop: 10,
     marginLeft: "auto",
@@ -89,9 +96,11 @@ const styles = StyleSheet.create({
     borderRadius: 20,
   },
   loginAuthButton: {
+    // fontFamily: "Verdana",
     marginTop: 30,
   },
   text: {
+    // fontFamily: "Verdana",
     color: "#fff",
     fontSize: 20,
     textAlign: "center",
@@ -127,13 +136,97 @@ const styles = StyleSheet.create({
     alignItems: "center",
   },
   chatsList: {
+    backgroundColor: mainColor,
+    color: "#fff",
     width: "80%",
     padding: 20,
     marginTop: 40,
     marginLeft: "auto",
     marginRight: "auto",
-    borderRadius: 16,
+    borderRadius: 30,
     textAlign: "center",
+  },
+  boxShadow: {
+    backgroundColor: "#fff",
+    borderRadius: 10,
+    shadowColor: "#000",
+    shadowOffset: {
+      width: 0,
+      height: 2,
+    },
+    shadowOpacity: 0.25,
+    shadowRadius: 3.84,
+    elevation: 5,
+  },
+  groupContainer: {
+    flex: 1,
+    marginTop: 50,
+    paddingLeft: 20,
+    paddingRight: 20,
+  },
+  ownMessageContainer: {
+    marginLeft: "auto",
+    marginRight: 0,
+    width: "50%",
+    backgroundColor: mainColor,
+    marginBottom: 20,
+    borderRadius: 20,
+    borderBottomRightRadius: 7,
+    padding: 10,
+    paddingLeft: 15,
+  },
+  messageContainer: {
+    width: "50%",
+    backgroundColor: "#F5F5F5",
+    marginBottom: 20,
+    borderRadius: 20,
+    borderTopLeftRadius: 7,
+    padding: 10,
+    paddingTop: 5,
+    paddingLeft: 15,
+  },
+  messageOwner: {
+    color: mainColor,
+    fontSize: 16,
+    marginBottom: 5,
+  },
+  message: {
+    color: "#353806cc",
+  },
+  ownMessage: {
+    backgroundColor: mainColor,
+    color: "#fff",
+  },
+  sendMessageContainer: {
+    height: 80,
+  },
+  sendMessageInputWrapper: {
+    height: 50,
+    width: "80%",
+    marginLeft: "auto",
+    marginRight: "auto",
+    marginTop: "auto",
+    marginBottom: "auto",
+  },
+  sendMessageInput: {
+    height: 50,
+    backgroundColor: "#F5F5F5",
+    borderRadius: 15,
+    paddingLeft: 20,
+    paddingRight: 40,
+    width: "100%",
+    marginLeft: "auto",
+    marginRight: "auto",
+    marginTop: "auto",
+    marginBottom: "auto",
+  },
+  sendMessageIconWrapper: {
+    alignItems: "center",
+    position: "absolute",
+    right: 10,
+    bottom: 0,
+    top: 0,
+    justifyContent: "center",
   },
 });
 

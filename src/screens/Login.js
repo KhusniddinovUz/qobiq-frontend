@@ -1,27 +1,42 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useContext } from "react";
 import { View, Text, TextInput, Pressable } from "react-native";
-import { useDispatch } from "react-redux";
-import { login } from "../redux/actions/auth";
-import { useSelector } from "react-redux";
 import styles from "./styles";
 import FontAwesome5 from "react-native-vector-icons/FontAwesome5";
 import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view";
+import { AuthContext } from "../store/authContext";
+import { login } from "../util/auth";
+import * as SplashScreen from "expo-splash-screen";
+import { useFonts } from "expo-font";
 
 const Login = (props) => {
+  const [fontsLoaded] = useFonts({
+    Verdana: require("../../assets/fonts/Verdana.ttf"),
+  });
+  const authCtx = useContext(AuthContext);
   const { navigation } = props;
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
-  const dispatch = useDispatch();
-  const auth = useSelector((state) => state.auth);
-  const loginHandler = () => {
-    dispatch(login({ username: username, password: password }));
+  const loginHandler = async () => {
+    try {
+      const user = await login({ username: username, password: password });
+      authCtx.login(user);
+    } catch (error) {
+      console.log(error);
+    }
   };
 
   useEffect(() => {
-    if (auth.isAuthenticated) {
-      navigation.navigate("Clubs");
+    async function prepare() {
+      await SplashScreen.preventAutoHideAsync();
     }
-  });
+    prepare();
+  }, []);
+
+  if (!fontsLoaded) {
+    return null;
+  } else {
+    SplashScreen.hideAsync();
+  }
 
   return (
     <KeyboardAwareScrollView
@@ -31,13 +46,15 @@ const Login = (props) => {
     >
       <View style={styles.authContainer}>
         <View style={styles.authHeaderBox}>
-          <Text style={styles.authHeader}>Login to your Account</Text>
+          <Text style={[styles.authHeader, { fontFamily: "Verdana" }]}>
+            Login to your Account
+          </Text>
         </View>
         <View style={styles.inputContainer}>
           <View style={{ paddingTop: 20 }}>
             <View style={[styles.inputBox, styles.loginInputBox]}>
               <TextInput
-                style={styles.input}
+                style={[styles.input, { fontFamily: "Verdana" }]}
                 value={username}
                 placeholder="Email"
                 placeholderTextColor="#9E9E9E"
@@ -51,7 +68,7 @@ const Login = (props) => {
             </View>
             <View style={[styles.inputBox, styles.loginInputBox]}>
               <TextInput
-                style={styles.input}
+                style={[styles.input, { fontFamily: "Verdana" }]}
                 value={password}
                 placeholder="Password"
                 placeholderTextColor="#9E9E9E"
@@ -67,7 +84,9 @@ const Login = (props) => {
               style={[styles.authButton, styles.loginAuthButton]}
               onPress={loginHandler}
             >
-              <Text style={styles.text}>Sign in</Text>
+              <Text style={[styles.text, { fontFamily: "Verdana" }]}>
+                Sign in
+              </Text>
             </Pressable>
           </View>
           <View>

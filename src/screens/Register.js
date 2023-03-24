@@ -1,57 +1,73 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useContext } from "react";
 import { View, Text, TextInput, Pressable } from "react-native";
-import { useDispatch } from "react-redux";
-import { register } from "../redux/actions/auth";
-import { useSelector } from "react-redux";
 import FontAwesome5 from "react-native-vector-icons/FontAwesome5";
 import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view";
 import SwitchSelector from "react-native-switch-selector";
-import { Picker } from "@react-native-picker/picker";
+import DropDownPicker from "react-native-dropdown-picker";
+import * as SplashScreen from "expo-splash-screen";
+import { useFonts } from "expo-font";
+import { AuthContext } from "../store/authContext";
+import { register } from "../util/auth";
 import styles from "./styles";
 
 const Register = (props) => {
+  const [fontsLoaded] = useFonts({
+    Verdana: require("../../assets/fonts/Verdana.ttf"),
+  });
+  const authCtx = useContext(AuthContext);
   const { navigation } = props;
   const [type, setType] = useState("");
   const [name, setName] = useState("");
-  const [gender, setGender] = useState();
+  const [open, setOpen] = useState(false);
+  const [gender, setGender] = useState(null);
+  const [items, setItems] = useState([
+    { label: "Male", value: "male" },
+    { label: "Female", value: "female" },
+  ]);
   const [age, setAge] = useState(undefined);
   const [email, setEmail] = useState("");
   const [phoneNumber, setPhoneNumber] = useState("");
   const [password, setPassword] = useState("");
   const [bio, setBio] = useState("");
-  const auth = useSelector((state) => state.auth);
-  const dispatch = useDispatch();
-  // setType("student");
-  // setGender("male");
 
   useEffect(() => {
-    if (auth.isAuthenticated) {
-      navigation.navigate("Clubs");
-    }
     setType("student");
     setGender("male");
+    async function prepare() {
+      await SplashScreen.preventAutoHideAsync();
+    }
+    prepare();
+    DropDownPicker.setListMode("MODAL");
   }, []);
 
   const options = [
     { label: "Student", value: "student" },
     { label: "Mentor", value: "mentor" },
   ];
-  const registerHandler = () => {
-    dispatch(
-      register({
-        user_type: type,
-        username: email,
-        fullname: name,
-        email: email,
-        age: age,
-        gender: gender,
-        phone_number: phoneNumber,
-        bio: bio,
-        password: password,
-      })
-    );
+  const registerHandler = async () => {
+    const user = {
+      user_type: type,
+      username: email,
+      fullname: name,
+      email: email,
+      age: age,
+      gender: gender,
+      phone_number: phoneNumber,
+      bio: bio,
+      password: password,
+    };
+    try {
+      const response = await register(user);
+      authCtx.register(response);
+    } catch (error) {
+      console.log("reg error", error);
+    }
   };
-
+  if (!fontsLoaded) {
+    return null;
+  } else {
+    SplashScreen.hideAsync();
+  }
   return (
     <KeyboardAwareScrollView
       enableOnAndroid={false}
@@ -60,12 +76,16 @@ const Register = (props) => {
     >
       <View style={styles.authContainer}>
         <View style={styles.authHeaderBox}>
-          <Text style={styles.authHeader}>Create your Account</Text>
+          <Text style={[styles.authHeader, { fontFamily: "Verdana" }]}>
+            Create your Account
+          </Text>
         </View>
         <View style={styles.inputContainer}>
           <View style={{ marginBottom: 20 }}>
             <View style={styles.inputBox}>
               <SwitchSelector
+                textStyle={{ fontFamily: "Verdana" }}
+                selectedTextStyle={{ fontFamily: "Verdana" }}
                 options={options}
                 initial={0}
                 buttonColor={"#00CDBD"}
@@ -78,7 +98,7 @@ const Register = (props) => {
               <TextInput
                 value={name}
                 onChangeText={(val) => setName(val)}
-                style={styles.input}
+                style={[styles.input, { fontFamily: "Verdana" }]}
                 placeholder="Your name"
               />
               <View style={styles.inputIconWrapper}>
@@ -92,23 +112,50 @@ const Register = (props) => {
                   {
                     width: "45%",
                     borderRadius: 20,
-                    backgroundColor: "#F7F7F7",
                   },
                 ]}
               >
-                <Picker
-                  dropdownIconColor={"#00CDBD"}
-                  selectedValue={gender}
-                  onValueChange={(itemValue, itemIndex) => setGender(itemValue)}
-                >
-                  <Picker.Item label="Male" value="male" />
-                  <Picker.Item label="Female" value="female" />
-                </Picker>
+                <DropDownPicker
+                  textStyle={{
+                    fontFamily: "Verdana",
+                  }}
+                  style={{
+                    backgroundColor: "#F7F7F7",
+                    borderRadius: 20,
+                    paddingLeft: 20,
+                    borderColor: "#f7f7f7",
+                  }}
+                  arrowIconContainerStyle={{
+                    backgroundColor: "#00CDBD",
+                    borderRadius: 10,
+                    width: 20,
+                    height: 20,
+                    justifyContent: "center",
+                    alignItems: "center",
+                  }}
+                  ArrowDownIconComponent={() => (
+                    <FontAwesome5 name="chevron-down" color="#fff" size={15} />
+                  )}
+                  ArrowUpIconComponent={() => (
+                    <FontAwesome5 name="chevron-up" color="#fff" size={15} />
+                  )}
+                  modalAnimationType="slide"
+                  open={open}
+                  value={gender}
+                  items={items}
+                  setOpen={setOpen}
+                  setValue={setGender}
+                  setItems={setItems}
+                />
               </View>
               <TextInput
                 value={age}
                 onChangeText={(val) => setAge(val)}
-                style={[styles.input, styles.genderAgeInput]}
+                style={[
+                  styles.input,
+                  styles.genderAgeInput,
+                  { fontFamily: "Verdana" },
+                ]}
                 placeholder="Age"
               />
             </View>
@@ -116,7 +163,7 @@ const Register = (props) => {
               <TextInput
                 value={email}
                 onChangeText={(val) => setEmail(val)}
-                style={styles.input}
+                style={[styles.input, { fontFamily: "Verdana" }]}
                 placeholder="Email"
               />
               <View style={styles.inputIconWrapper}>
@@ -127,7 +174,7 @@ const Register = (props) => {
               <TextInput
                 value={phoneNumber}
                 onChangeText={(val) => setPhoneNumber(val)}
-                style={styles.input}
+                style={[styles.input, { fontFamily: "Verdana" }]}
                 placeholder="Phone Number"
               />
               <View style={styles.inputIconWrapper}>
@@ -143,7 +190,7 @@ const Register = (props) => {
               <TextInput
                 value={password}
                 onChangeText={(val) => setPassword(val)}
-                style={styles.input}
+                style={[styles.input, { fontFamily: "Verdana" }]}
                 placeholder="Password"
               />
               <View style={styles.inputIconWrapper}>
@@ -154,7 +201,7 @@ const Register = (props) => {
               <TextInput
                 value={bio}
                 onChangeText={(val) => setBio(val)}
-                style={styles.input}
+                style={[styles.input, { fontFamily: "Verdana" }]}
                 placeholder="Bio"
                 multiline={true}
                 numberOfLines={10}
@@ -172,18 +219,18 @@ const Register = (props) => {
               <Text
                 onPress={() => {
                   registerHandler();
-                  console.log(
-                    type,
-                    name,
-                    gender,
-                    age,
-                    email,
-                    phoneNumber,
-                    password,
-                    bio
-                  );
+                  // console.log(
+                  //   type,
+                  //   name,
+                  //   gender,
+                  //   age,
+                  //   email,
+                  //   phoneNumber,
+                  //   password,
+                  //   bio
+                  // );
                 }}
-                style={styles.text}
+                style={[styles.text, { fontFamily: "Verdana" }]}
               >
                 Sign up
               </Text>
