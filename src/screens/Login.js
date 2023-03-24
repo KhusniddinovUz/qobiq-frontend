@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useContext } from "react";
-import { View, Text, TextInput, Pressable } from "react-native";
+import { View, Text, TextInput, Pressable, Alert } from "react-native";
 import styles from "./styles";
 import FontAwesome5 from "react-native-vector-icons/FontAwesome5";
 import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view";
@@ -21,7 +21,7 @@ const Login = (props) => {
       const user = await login({ username: username, password: password });
       authCtx.login(user);
     } catch (error) {
-      console.log(error);
+      Alert.alert(error.cause);
     }
   };
 
@@ -108,7 +108,7 @@ const Login = (props) => {
                   { fontWeight: "bold", fontSize: 18 },
                 ]}
                 onPress={() => {
-                  navigation.navigate("Register");
+                  navigation.replace("Register");
                 }}
               >
                 Sign up

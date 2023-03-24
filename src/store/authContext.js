@@ -19,9 +19,9 @@ const AuthContextProvider = ({ children }) => {
   const [userObject, setUserObject] = useState({});
   const [token, setToken] = useState();
   const authenticate = async (user) => {
-    setUserObject(user.user);
-    setToken(user.token);
-    if (user.token) {
+    if (user && user.token) {
+      setUserObject(user.user);
+      setToken(user.token);
       await AsyncStorage.setItem("token", user.token);
       await AsyncStorage.setItem("userType", user.user.user_type);
       await AsyncStorage.setItem("name", user.user.fullname);
@@ -48,7 +48,6 @@ const AuthContextProvider = ({ children }) => {
     register: authenticate,
     login: authenticate,
   };
-  console.log(value);
 
   return <AuthContext.Provider value={value}>{children}</AuthContext.Provider>;
 };

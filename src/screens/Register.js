@@ -1,5 +1,5 @@
 import React, { useEffect, useState, useContext } from "react";
-import { View, Text, TextInput, Pressable } from "react-native";
+import { View, Text, TextInput, Pressable, Alert } from "react-native";
 import FontAwesome5 from "react-native-vector-icons/FontAwesome5";
 import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view";
 import SwitchSelector from "react-native-switch-selector";
@@ -60,7 +60,7 @@ const Register = (props) => {
       const response = await register(user);
       authCtx.register(response);
     } catch (error) {
-      console.log("reg error", error);
+      Alert.alert(error.cause);
     }
   };
   if (!fontsLoaded) {
@@ -217,19 +217,7 @@ const Register = (props) => {
             </View>
             <Pressable style={styles.authButton} onPress={registerHandler}>
               <Text
-                onPress={() => {
-                  registerHandler();
-                  // console.log(
-                  //   type,
-                  //   name,
-                  //   gender,
-                  //   age,
-                  //   email,
-                  //   phoneNumber,
-                  //   password,
-                  //   bio
-                  // );
-                }}
+                onPress={registerHandler}
                 style={[styles.text, { fontFamily: "Verdana" }]}
               >
                 Sign up
@@ -255,7 +243,7 @@ const Register = (props) => {
                   { fontWeight: "bold", fontSize: 18 },
                 ]}
                 onPress={() => {
-                  navigation.navigate("Login");
+                  navigation.replace("Login");
                 }}
               >
                 Sign in

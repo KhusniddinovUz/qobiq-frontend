@@ -48,6 +48,7 @@ const MainStackNavigator = () => {
   const authCtx = useContext(AuthContext);
   useEffect(() => {
     const fetchUser = async () => {
+      // await AsyncStorage.clear();
       const token = await AsyncStorage.getItem("token");
       const name = await AsyncStorage.getItem("name");
       const userType = await AsyncStorage.getItem("userType");
