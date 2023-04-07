@@ -1,26 +1,15 @@
-import { useEffect, useState } from "react";
+import { useState, useContext } from "react";
 import { View, Text, Image } from "react-native";
-import axios from "axios";
 import { List } from "react-native-paper";
 import styles from "./styles";
 import { dummyClubs } from "./dummyData";
 import qobiqImg from "../../qobiq.png";
+import { AuthContext } from "../store/authContext";
 
 const Home = (props) => {
   const { navigation } = props;
   const [clubs, setClubs] = useState(dummyClubs);
-  const [err, setErr] = useState();
-  useEffect(() => {
-    // axios
-    //   .get("https://newuuclubs.herokuapp.com/api/clubs?format=json")
-    //   .then((data) => {
-    //     setClubs(data.data);
-    //   })
-    //   .catch((error) => {
-    //     setErr(error);
-    //     console.log(err);
-    //   });
-  }, []);
+  const useCtx = useContext(AuthContext);
 
   return (
     <View style={styles.container}>
@@ -68,11 +57,14 @@ const Home = (props) => {
           clubs.map((club) => (
             <List.Item
               key={club.id}
-              title="Group Name"
+              title={club.club_name}
               titleStyle={{ color: "#fff", fontSize: 25 }}
-              description="Group description"
+              description={club.club_definition}
               descriptionStyle={{ color: "#898989", fontSize: 18 }}
-              onPress={() => navigation.navigate("Group", { club: club })}
+              onPress={() => {
+                navigation.navigate("Group", { club: club });
+                useCtx.changeLoading(true);
+              }}
               style={[styles.boxShadow, styles.chatsList]}
             />
           ))}

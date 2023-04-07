@@ -11,13 +11,23 @@ export const AuthContext = createContext({
   id: null,
   phoneNumber: null,
   bio: null,
+  isLoading: false,
+  unityMessages: [],
+  mirrorMessages: [],
+  destinyMessages: [],
+  loadMessages: () => {},
   register: () => {},
   login: () => {},
+  changeLoading: () => {},
 });
 
 const AuthContextProvider = ({ children }) => {
   const [userObject, setUserObject] = useState({});
   const [token, setToken] = useState();
+  const [unityMessages, setUnityMessages] = useState([]);
+  const [mirrorMessages, setMirrorMessages] = useState([]);
+  const [destinyMessages, setDestinyMessages] = useState([]);
+  const [loading, setLoading] = useState(false);
   const authenticate = async (user) => {
     if (user && user.token) {
       setUserObject(user.user);
@@ -33,6 +43,23 @@ const AuthContextProvider = ({ children }) => {
       await AsyncStorage.setItem("bio", user.user.bio);
     }
   };
+  const loadMessages = (messages, chatRoom) => {
+    switch (chatRoom) {
+      case "unity":
+        setUnityMessages(messages);
+        break;
+      case "mirror":
+        setMirrorMessages(messages);
+        break;
+      case "destiny":
+        setDestinyMessages(messages);
+        break;
+    }
+  };
+
+  const changeLoading = (value) => {
+    setLoading(value);
+  };
 
   const value = {
     token: token,
@@ -45,8 +72,14 @@ const AuthContextProvider = ({ children }) => {
     id: userObject.id,
     phoneNumber: userObject.phone_number,
     bio: userObject.bio,
+    isLoading: loading,
+    unityMessages: unityMessages,
+    mirrorMessages: mirrorMessages,
+    destinyMessages: destinyMessages,
+    loadMessages: loadMessages,
     register: authenticate,
     login: authenticate,
+    changeLoading: changeLoading,
   };
 
   return <AuthContext.Provider value={value}>{children}</AuthContext.Provider>;

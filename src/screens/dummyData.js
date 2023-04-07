@@ -1,21 +1,18 @@
 export const dummyClubs = [
   {
-    id: "1",
-    club_name: "The Anime Group",
-    club_definition:
-      "Anime club meetings can occur on a weekly or monthly basis. In addition to viewing anime, clubs engage in other activities such as viewing anime music videos, reading manga, karaoke and cosplaying.",
+    id: "unity",
+    club_name: "Unity",
+    club_definition: "You are not alone",
   },
   {
-    id: "2",
-    club_name: "The Anime Group",
-    club_definition:
-      "Anime club meetings can occur on a weekly or monthly basis. In addition to viewing anime, clubs engage in other activities such as viewing anime music videos, reading manga, karaoke and cosplaying.",
+    id: "destiny",
+    club_name: "Your destiny",
+    club_definition: "On my way",
   },
   {
-    id: "3",
-    club_name: "The Anime Group",
-    club_definition:
-      "Anime club meetings can occur on a weekly or monthly basis. In addition to viewing anime, clubs engage in other activities such as viewing anime music videos, reading manga, karaoke and cosplaying.",
+    id: "mirror",
+    club_name: "Mutual Mirror",
+    club_definition: "Shape yourself",
   },
 ];
 

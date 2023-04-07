@@ -228,6 +228,10 @@ const styles = StyleSheet.create({
     top: 0,
     justifyContent: "center",
   },
+  loader: {
+    flex: 1,
+    justifyContent: "center",
+  },
 });
 
 export default styles;
