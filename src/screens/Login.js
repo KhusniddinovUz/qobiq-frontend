@@ -31,7 +31,9 @@ const Login = (props) => {
     } catch (error) {
       Alert.alert(error.cause);
     }
-    authCtx.changeLoading(false);
+    setTimeout(() => {
+      authCtx.changeLoading(false);
+    }, 500);
   };
 
   useEffect(() => {

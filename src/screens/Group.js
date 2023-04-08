@@ -62,7 +62,7 @@ const Group = (props) => {
           <ScrollView>
             {messages &&
               messages.map((message) => {
-                if (message.sender.username === "Shakhobiddin") {
+                if (message.sender.email === ctx.email) {
                   return <OwnMessage key={message.id} message={message} />;
                 } else {
                   return <RegularMessage key={message.id} message={message} />;
@@ -70,7 +70,7 @@ const Group = (props) => {
               })}
           </ScrollView>
         </View>
-        <SendMessage />
+        <SendMessage chatRoom={club.id} />
       </View>
     );
 };
