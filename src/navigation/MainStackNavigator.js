@@ -7,9 +7,9 @@ import Login from "../screens/Login";
 import Register from "../screens/Register";
 import { AuthContext } from "../store/authContext";
 import AsyncStorage from "@react-native-async-storage/async-storage";
+import Welcome from "../screens/Welcome";
 
 const Stack = createStackNavigator();
-
 const MyTheme = {
   ...DefaultTheme,
   colors: {
@@ -22,10 +22,12 @@ const MyTheme = {
 const AuthStack = () => {
   return (
     <Stack.Navigator
+      initialRouteName="Welcome"
       screenOptions={{
         headerShown: false,
       }}
     >
+      <Stack.Screen name="Welcome" component={Welcome} />
       <Stack.Screen name="Register" component={Register} />
       <Stack.Screen name="Login" component={Login} />
     </Stack.Navigator>
@@ -47,8 +49,15 @@ const AuthenticatedStack = () => {
 const MainStackNavigator = () => {
   const authCtx = useContext(AuthContext);
   useEffect(() => {
+    const checkFirstTime = async () => {
+      const firstTime = await AsyncStorage.getItem("firstTime");
+      authCtx.changeFirstTime(JSON.parse(firstTime));
+    };
+    checkFirstTime();
+  }, [authCtx.firstTime]);
+  useEffect(() => {
     const fetchUser = async () => {
-      // await AsyncStorage.clear();
+      authCtx.changeLoading(true);
       const token = await AsyncStorage.getItem("token");
       const name = await AsyncStorage.getItem("name");
       const userType = await AsyncStorage.getItem("userType");
@@ -72,9 +81,11 @@ const MainStackNavigator = () => {
       if (token) {
         authCtx.login(data);
       }
+      authCtx.changeLoading(false);
     };
     fetchUser();
   }, []);
+
   return (
     <NavigationContainer theme={MyTheme}>
       {!authCtx.isAuthenticated && <AuthStack />}

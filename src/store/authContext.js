@@ -12,6 +12,7 @@ export const AuthContext = createContext({
   phoneNumber: null,
   bio: null,
   isLoading: false,
+  firstTime: true,
   unityMessages: [],
   mirrorMessages: [],
   destinyMessages: [],
@@ -19,6 +20,7 @@ export const AuthContext = createContext({
   register: () => {},
   login: () => {},
   changeLoading: () => {},
+  changeFirstTime: () => {},
 });
 
 const AuthContextProvider = ({ children }) => {
@@ -28,10 +30,12 @@ const AuthContextProvider = ({ children }) => {
   const [mirrorMessages, setMirrorMessages] = useState([]);
   const [destinyMessages, setDestinyMessages] = useState([]);
   const [loading, setLoading] = useState(false);
+  const [firstTime, setFirstTime] = useState(true);
   const authenticate = async (user) => {
     if (user && user.token) {
       setUserObject(user.user);
       setToken(user.token);
+      await AsyncStorage.setItem("firstTime", firstTime.toString());
       await AsyncStorage.setItem("token", user.token);
       await AsyncStorage.setItem("userType", user.user.user_type);
       await AsyncStorage.setItem("name", user.user.fullname);
@@ -61,6 +65,10 @@ const AuthContextProvider = ({ children }) => {
     setLoading(value);
   };
 
+  const changeFirstTime = async (value) => {
+    setFirstTime(value);
+    await AsyncStorage.setItem("firstTime", JSON.stringify(value));
+  };
   const value = {
     token: token,
     isAuthenticated: !!token,
@@ -76,10 +84,12 @@ const AuthContextProvider = ({ children }) => {
     unityMessages: unityMessages,
     mirrorMessages: mirrorMessages,
     destinyMessages: destinyMessages,
+    firstTime: firstTime,
     loadMessages: loadMessages,
     register: authenticate,
     login: authenticate,
     changeLoading: changeLoading,
+    changeFirstTime: changeFirstTime,
   };
 
   return <AuthContext.Provider value={value}>{children}</AuthContext.Provider>;

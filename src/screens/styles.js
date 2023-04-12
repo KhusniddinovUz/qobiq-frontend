@@ -198,7 +198,7 @@ const styles = StyleSheet.create({
     color: "#fff",
   },
   sendMessageContainer: {
-    height: 80,
+    height: 100,
   },
   sendMessageInputWrapper: {
     height: 50,

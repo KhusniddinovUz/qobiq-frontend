@@ -4,7 +4,7 @@ import AsyncStorage from "@react-native-async-storage/async-storage";
 export const loadMessages = async (chatRoom) => {
   try {
     const response = await axios.get(
-      "http://127.0.0.1:8000/api/chat/messages/",
+      "https://qobiq-backend.herokuapp.com/api/chat/messages/",
       { params: { chat_room: chatRoom } }
     );
     return response.data;
@@ -24,7 +24,7 @@ export const createMessage = async (message) => {
   };
   try {
     const response = await axios.post(
-      "http://127.0.0.1:8000/api/chat/create/",
+      "https://qobiq-backend.herokuapp.com/api/chat/create/",
       message,
       config
     );

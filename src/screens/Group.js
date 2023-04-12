@@ -1,4 +1,4 @@
-import React, { useEffect, useState, useContext } from "react";
+import React, { useEffect, useState, useContext, useRef } from "react";
 import { View, Text, Alert, ActivityIndicator } from "react-native";
 import styles from "./styles";
 import { ScrollView } from "react-native";
@@ -12,6 +12,7 @@ const Group = (props) => {
   const { club } = props.route.params;
   const [messages, setMessages] = useState([]);
   const ctx = useContext(AuthContext);
+  const scrollViewRef = useRef();
   useEffect(() => {
     const fetchData = async () => {
       try {
@@ -54,12 +55,18 @@ const Group = (props) => {
             height: 60,
             fontSize: 40,
             textAlign: "center",
+            marginBottom: 20,
           }}
         >
           {club.club_name}
         </Text>
         <View style={{ flex: 1 }}>
-          <ScrollView>
+          <ScrollView
+            ref={scrollViewRef}
+            onContentSizeChange={() => {
+              scrollViewRef.current.scrollToEnd({ animated: false });
+            }}
+          >
             {messages &&
               messages.map((message) => {
                 if (message.sender.email === ctx.email) {
