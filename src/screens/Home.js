@@ -68,6 +68,31 @@ const Home = (props) => {
               style={[styles.boxShadow, styles.chatsList]}
             />
           ))}
+        <View
+          style={{
+            marginTop: 50,
+            borderColor: "#898989",
+            borderStyle: "solid",
+            borderWidth: 1,
+            width: "80%",
+            height: 1,
+            marginLeft: "auto",
+            marginRight: "auto",
+          }}
+        ></View>
+        <List.Item
+          key="recommendation"
+          title="Recommendation"
+          titleStyle={{ color: "#fff", fontSize: 25 }}
+          onPress={() => {
+            navigation.navigate("Recommendation");
+          }}
+          style={[
+            styles.boxShadow,
+            styles.chatsList,
+            { marginTop: 30, borderRadius: 20 },
+          ]}
+        />
       </View>
     </View>
   );

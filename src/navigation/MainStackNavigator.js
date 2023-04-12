@@ -8,6 +8,8 @@ import Register from "../screens/Register";
 import { AuthContext } from "../store/authContext";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import Welcome from "../screens/Welcome";
+import Recommendation from "../screens/Recommendation";
+import Article from "../screens/Article";
 
 const Stack = createStackNavigator();
 const MyTheme = {
@@ -43,6 +45,8 @@ const AuthenticatedStack = () => {
     >
       <Stack.Screen name="Home" component={Home} />
       <Stack.Screen name="Group" component={Group} />
+      <Stack.Screen name="Recommendation" component={Recommendation} />
+      <Stack.Screen name="Article" component={Article} />
     </Stack.Navigator>
   );
 };

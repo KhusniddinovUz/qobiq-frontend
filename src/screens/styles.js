@@ -232,6 +232,32 @@ const styles = StyleSheet.create({
     flex: 1,
     justifyContent: "center",
   },
+  articleContainer: {
+    paddingTop: 80,
+    paddingBottom: 20,
+    width: "90%",
+    height: "100%",
+    marginLeft: "auto",
+    marginRight: "auto",
+  },
+  articleTitle: {
+    fontSize: 25,
+    color: mainColor,
+    textAlign: "center",
+    marginBottom: 30,
+  },
+  articleContent: {
+    textAlign: "left",
+    borderStyle: "solid",
+    borderWidth: 3,
+    borderRadius: 10,
+    borderColor: mainColor,
+    paddingLeft: 15,
+    paddingRight: 15,
+    paddingTop: 20,
+    paddingBottom: 10,
+    fontSize: 16,
+  },
 });
 
 export default styles;

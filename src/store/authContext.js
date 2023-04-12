@@ -16,11 +16,13 @@ export const AuthContext = createContext({
   unityMessages: [],
   mirrorMessages: [],
   destinyMessages: [],
+  articles: [],
   loadMessages: () => {},
   register: () => {},
   login: () => {},
   changeLoading: () => {},
   changeFirstTime: () => {},
+  loadArticles: () => {},
 });
 
 const AuthContextProvider = ({ children }) => {
@@ -31,6 +33,7 @@ const AuthContextProvider = ({ children }) => {
   const [destinyMessages, setDestinyMessages] = useState([]);
   const [loading, setLoading] = useState(false);
   const [firstTime, setFirstTime] = useState(true);
+  const [articles, setArticles] = useState([]);
   const authenticate = async (user) => {
     if (user && user.token) {
       setUserObject(user.user);
@@ -69,6 +72,9 @@ const AuthContextProvider = ({ children }) => {
     setFirstTime(value);
     await AsyncStorage.setItem("firstTime", JSON.stringify(value));
   };
+  const loadArticles = (data) => {
+    setArticles(data);
+  };
   const value = {
     token: token,
     isAuthenticated: !!token,
@@ -85,11 +91,13 @@ const AuthContextProvider = ({ children }) => {
     mirrorMessages: mirrorMessages,
     destinyMessages: destinyMessages,
     firstTime: firstTime,
+    articles: articles,
     loadMessages: loadMessages,
     register: authenticate,
     login: authenticate,
     changeLoading: changeLoading,
     changeFirstTime: changeFirstTime,
+    loadArticles: loadArticles,
   };
 
   return <AuthContext.Provider value={value}>{children}</AuthContext.Provider>;
