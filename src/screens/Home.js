@@ -1,5 +1,5 @@
 import { useState, useContext } from "react";
-import { View, Text, Image } from "react-native";
+import { View, Text, Image, ScrollView } from "react-native";
 import { List } from "react-native-paper";
 import styles from "./styles";
 import { dummyClubs } from "./dummyData";
@@ -12,7 +12,7 @@ const Home = (props) => {
   const useCtx = useContext(AuthContext);
 
   return (
-    <View style={styles.container}>
+    <ScrollView style={[styles.container, { marginTop: 30 }]}>
       <View
         style={{
           width: "80%",
@@ -90,11 +90,11 @@ const Home = (props) => {
           style={[
             styles.boxShadow,
             styles.chatsList,
-            { marginTop: 30, borderRadius: 20 },
+            { marginTop: 30, marginBottom: 30, borderRadius: 20 },
           ]}
         />
       </View>
-    </View>
+    </ScrollView>
   );
 };
 

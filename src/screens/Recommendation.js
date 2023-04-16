@@ -1,5 +1,5 @@
 import React, { useEffect, useContext } from "react";
-import { ActivityIndicator, Alert, View } from "react-native";
+import { ActivityIndicator, Alert, ScrollView, View } from "react-native";
 import { AuthContext } from "../store/authContext";
 import { loadArticles } from "../util/articles";
 import styles from "./styles";
@@ -30,7 +30,7 @@ const Recommendation = (props) => {
     );
   } else
     return (
-      <View style={{ paddingTop: 50 }}>
+      <ScrollView style={{ paddingTop: 20 }}>
         {ctx.articles &&
           ctx.articles.map((article) => {
             return (
@@ -49,7 +49,7 @@ const Recommendation = (props) => {
               />
             );
           })}
-      </View>
+      </ScrollView>
     );
 };
 

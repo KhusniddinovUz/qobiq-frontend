@@ -160,7 +160,7 @@ const styles = StyleSheet.create({
   },
   groupContainer: {
     flex: 1,
-    marginTop: 50,
+    marginTop: 10,
     paddingLeft: 20,
     paddingRight: 20,
   },
@@ -233,7 +233,7 @@ const styles = StyleSheet.create({
     justifyContent: "center",
   },
   articleContainer: {
-    paddingTop: 80,
+    paddingTop: 40,
     paddingBottom: 20,
     width: "90%",
     height: "100%",
